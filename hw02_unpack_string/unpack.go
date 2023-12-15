@@ -4,6 +4,7 @@ import (
 	"errors"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 var ErrInvalidString = errors.New("invalid string")
@@ -20,10 +21,12 @@ func Unpack(inputStr string) (string, error) {
 	resStr := strings.Builder{}
 
 	for i, v := range inputStr {
-		rInt, ErrIsDigit := strconv.Atoi(string(inputStr[i]))
+		rInt, _ := strconv.Atoi(string(inputStr[i]))
 
 		switch {
-		case ErrIsDigit == nil && rInt >= 0 && rInt < 10:
+		case unicode.IsDigit(v) && i < len(inputStr)-1 && unicode.IsDigit(rune(inputStr[i+1])):
+			return "", ErrInvalidString
+		case unicode.IsDigit(v):
 			if rInt == 0 {
 				str := resStr.String()
 				str = str[:len(str)-1]
