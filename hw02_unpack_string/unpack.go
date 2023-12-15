@@ -12,7 +12,6 @@ func Unpack(inputStr string) (string, error) {
 	if len(inputStr) == 0 {
 		return "", nil
 	}
-
 	_, err := strconv.Atoi(string([]rune(inputStr)[0]))
 	if err == nil {
 		return "", ErrInvalidString
@@ -21,18 +20,10 @@ func Unpack(inputStr string) (string, error) {
 	resStr := strings.Builder{}
 
 	for i, v := range inputStr {
-		ErrDigitOrNumber := errors.New("wrong: more than 1 digit(number)")
-
 		rInt, ErrIsDigit := strconv.Atoi(string(inputStr[i]))
 
-		if i < len(inputStr)-1 {
-			_, ErrDigitOrNumber = strconv.Atoi(string(inputStr[i+1]))
-		}
-
 		switch {
-		case ErrIsDigit == nil && ErrDigitOrNumber == nil:
-			return "", ErrInvalidString
-		case ErrIsDigit == nil && ErrDigitOrNumber != nil:
+		case ErrIsDigit == nil && rInt >= 0 && rInt < 10:
 			if rInt == 0 {
 				str := resStr.String()
 				str = str[:len(str)-1]
