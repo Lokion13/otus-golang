@@ -48,4 +48,16 @@ func TestList(t *testing.T) {
 		}
 		require.Equal(t, []int{70, 80, 60, 40, 10, 30, 50}, elems)
 	})
+
+	t.Run("methods check", func(t *testing.T) {
+		l := NewList()
+
+		for _, v := range [...]int{10, 20, 30, 40, 50} {
+			l.PushFront(v)
+		} // [50, 40, 30, 20, 10]
+		l.MoveToFront(l.Back())
+		require.Equal(t, 5, l.Len())
+		require.Equal(t, 10, l.Front().Value)
+		require.Equal(t, 20, l.Back().Value)
+	})
 }
