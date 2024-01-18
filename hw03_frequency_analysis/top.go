@@ -32,32 +32,15 @@ func Top10(inputStr string) []string {
 	}
 
 	sort.Slice(resSlice, func(i, j int) bool {
+		if resSlice[i].count == resSlice[j].count {
+			return resSlice[i].word < resSlice[j].word
+		}
 		return resSlice[i].count > resSlice[j].count
 	})
 
-	s := make([][]string, 0, len(resSlice))
-	subSlice := []string{}
-	counter := 0
-
-	for i := range resSlice {
-		if i > 9 && resSlice[i].count != resSlice[i-1].count {
-			break
-		}
-		if resSlice[i].count != resSlice[i+1].count {
-			subSlice = append(subSlice, resSlice[i].word)
-			s = append(s, subSlice)
-			subSlice = []string{}
-			continue
-		} else {
-			subSlice = append(subSlice, resSlice[i].word)
-			counter++
-		}
+	result := make([]string, 0, 10)
+	for _, v := range resSlice[:10] {
+		result = append(result, v.word)
 	}
-	resSL := make([]string, 0)
-	for _, v := range s {
-		sort.Slice(v, func(i, j int) bool { return v[i] < v[j] })
-		resSL = append(resSL, v...)
-	}
-
-	return resSL[:10]
+	return result
 }

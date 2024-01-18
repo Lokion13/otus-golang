@@ -1,4 +1,4 @@
-module github.com/Lokion13/otus-golang/hw02_unpack_string
+module github.com/Lokion13/otus-golang/hw03_frequency_analysis
 
 go 1.19
 
