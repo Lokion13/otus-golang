@@ -1,6 +1,7 @@
 package hw04lrucache
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 )
@@ -22,9 +23,18 @@ type ListItem struct {
 	Prev  *ListItem
 }
 
-func NewListItem(v interface{}) *ListItem {
-	strKey := Key(strconv.Itoa(v.(int)))
-	return &ListItem{strKey, v, nil, nil}
+func NewListItem(i interface{}) *ListItem {
+	var res ListItem
+	switch v := i.(type) {
+	case int:
+		strKey := Key(strconv.Itoa(i.(int)))
+		res = ListItem{strKey, v, nil, nil}
+	case string:
+		res = ListItem{Key(v), v, nil, nil}
+	default:
+		fmt.Printf("I don't know about type %T!\n", v)
+	}
+	return &res
 }
 
 type ListD struct {

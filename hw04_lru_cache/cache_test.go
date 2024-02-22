@@ -49,6 +49,18 @@ func TestCache(t *testing.T) {
 		require.Nil(t, val)
 	})
 
+	t.Run("simpleForString", func(t *testing.T) {
+		c := NewCache(5)
+
+		wasInCache := c.Set("aaa", "ab")
+		require.False(t, wasInCache)
+
+		val, ok := c.Get("aaa")
+		require.True(t, ok)
+		require.Equal(t, "ab", val)
+
+	})
+
 	t.Run("purge logic", func(t *testing.T) {
 		c := NewCache(3)
 		wg := &sync.WaitGroup{}
