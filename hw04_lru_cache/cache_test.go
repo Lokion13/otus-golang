@@ -58,7 +58,6 @@ func TestCache(t *testing.T) {
 		val, ok := c.Get("aaa")
 		require.True(t, ok)
 		require.Equal(t, "ab", val)
-
 	})
 
 	t.Run("purge logic", func(t *testing.T) {
